@@ -6,26 +6,34 @@ const {
   userPut,
   userDelete
 } = require("../controller/user.controller")
+const { validRol, emailExists, userExistsById } = require("../helpers/db-validators")
 const { validateFields } = require("../middlewares/validateFields")
-const Role = require("../models/role")
 
 const router = Router()
 
 router.get('/', userGet)
-router.put('/:id', userPut)
+
+router.put('/:id', [
+  check("id", "not valid id").isMongoId(),
+  check("id").custom(userExistsById),
+  check("rol").custom(validRol),
+  validateFields
+], userPut)
+
 router.post('/', [
   check("name", "name is required").not().isEmpty(),
   check("password", "password minLength 6").isLength({min: 6}),
   check("email", "not valid email").isEmail(),
+  check("email").custom(emailExists),
   // check("rol", "not valid rol").isIn(["ADMIN_ROLE", "USER_ROLE"]),
-  check("rol").custom(async (rol = "") => {
-    const roleExists = await Role.findOne({ rol })
-    if (!roleExists) {
-      throw new Error(`Rol ${rol} is not registered on DB`)
-    }
-  }),
+  check("rol").custom(validRol),
   validateFields
 ], userPost)
-router.delete('/', userDelete)
+
+router.delete('/:id', [
+  check("id", "not valid id").isMongoId(),
+  check("id").custom(userExistsById),
+  validateFields
+], userDelete)
 
 module.exports = router
