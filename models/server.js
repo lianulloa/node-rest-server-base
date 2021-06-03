@@ -6,7 +6,11 @@ class Server {
   constructor() {
     this.app = express()
     this.port = process.env.PORT
-    this.userPath = "/api/user"
+    this.paths = {
+      category: "/api/category",
+      user: "/api/user",
+      product: "/api/product"
+    }
 
     this.connectToDB()
 
@@ -27,7 +31,9 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.userPath, require("../routes/user.routes"))
+    this.app.use(this.paths.category, require("../routes/category.routes"))
+    this.app.use(this.paths.user, require("../routes/user.routes"))
+    this.app.use(this.paths.product, require("../routes/product.routes"))
   }
 
   listen() {
