@@ -47,7 +47,7 @@ const categoryPost = async (req = request, res = response) => {
 
   const data = {
     name,
-    user: req.body.user
+    user: req.user._id
   }
 
   const category = new Category(data)
