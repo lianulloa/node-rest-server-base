@@ -33,6 +33,7 @@ class Server {
     this.app.use(cors())
     this.app.use(express.json())
     this.app.use(fileUpload({
+      createParentPath: true,
       useTempFiles : true,
       tempFileDir : '/tmp/'
   }));
