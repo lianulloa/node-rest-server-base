@@ -7,11 +7,18 @@
   <meta name="google-signin-client_id" content="794095214742-3kpkckc7lnd9tqh4fofhavo7vevur3ap.apps.googleusercontent.com">
   <title>Google Sign-in</title>
 </head>
-<body>
-  <h1>Google Sign-in</h1>
-  <hr>
-  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  <a href="#" onclick="signOut();">Sign out</a>
+<body class="container">
+  <div class="row mt-5">
+    <div class="col-sm-6">
+      <h1>Google Sign-in</h1>
+      <hr>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <a href="#" onclick="signOut();">Sign out</a>
+    </div>
+    <div class="col-sm-6">
+
+    </div>
+  </div>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script>
     var url = "http://localhost:8080/api/auth/google"
